@@ -69,7 +69,12 @@ function clickTile() {
         return;
     }
 
+    if (this.innerText === "🚩") {
+        return;
+    }
+
     let tile = this;
+
     if (flagEnabled) {
         if(tile.innerText == "") {
             tile.innerText = "🚩"
@@ -81,9 +86,9 @@ function clickTile() {
     }
 
     if(minesLocation.includes(tile.id)) {
-        // alert("GAME OVER");
         gameOver = true;
         revealMines();
+        alert("GAME OVER");
         return;
     }
 
