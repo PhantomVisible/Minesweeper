@@ -1,8 +1,6 @@
-var board = [];
-var rows = 8;
-var cols = 8;
 
-var minesCount = 10;
+var board = [];
+
 var minesLocation = [];
 
 var tilesClicked = 0;
@@ -11,6 +9,43 @@ var flagEnabled = false;
 var gameOver = false;
 
 window.onload = function() {
+    loadDifficulty("medium");
+
+    document.getElementById("difficulty").addEventListener("change", function () {
+        loadDifficulty(this.value);
+    });
+}
+
+const difficultySettings = {
+    easy: { rows: 6, cols: 6, minesCount: 4 },
+    medium: { rows: 8, cols: 8, minesCount: 10 },
+    hard: { rows: 12, cols: 12, minesCount: 25 }
+}
+
+function loadDifficulty(level) {
+    rows = difficultySettings[level].rows;
+    cols = difficultySettings[level].cols;
+    minesCount = difficultySettings[level].minesCount;
+
+    resetGame();
+}
+
+function resetGame() {
+    // Reset game state
+    board = [];
+    minesLocation = [];
+    tilesClicked = 0;
+    gameOver = false;
+    flagEnabled = false;
+
+    // Reset UI
+    document.getElementById("board").innerHTML = "";
+    document.getElementById("flag-button").style.backgroundColor = "lightgray";
+    document.getElementById("mines-count").innerText = minesCount;
+
+    document.getElementById("board").style.gridTemplateColumns =
+        `repeat(${cols}, var(--tile-size))`;
+
     startGame();
 }
 
@@ -37,7 +72,7 @@ function setMines() {
 function startGame() {
     document.getElementById("mines-count").innerText = minesCount;
     document.getElementById("flag-button").addEventListener("click", setFlag);
-    setMines();
+    setMines()
 
     for (let r = 0; r < rows; r++ ) {
         let row = [];
@@ -45,6 +80,7 @@ function startGame() {
             let tile = document.createElement("div");
             tile.id = r.toString() + "-" + c.toString();
             tile.addEventListener("click", clickTile)
+            tile.addEventListener("contextmenu", rightClickTile);
             document.getElementById("board").append(tile);
             row.push(tile);
         }
@@ -64,24 +100,38 @@ function setFlag(){
     }
 }
 
-function clickTile() {
-    if(gameOver || this.classList.contains("tile-clicked")) {
+function rightClickTile(e) {
+    e.preventDefault(); // stop browser context menu
+
+    if (gameOver || this.classList.contains("tile-clicked")) {
         return;
     }
 
-    if (this.innerText === "🚩") {
+    if (this.innerText === "") {
+        this.innerText = "🚩";
+    } else if (this.innerText === "🚩") {
+        this.innerText = "";
+    }
+}
+
+function clickTile() {
+    if(gameOver || this.classList.contains("tile-clicked")) {
         return;
     }
 
     let tile = this;
 
     if (flagEnabled) {
-        if(tile.innerText == "") {
+        if(tile.innerText === "") {
             tile.innerText = "🚩"
         }
-        else if (tile.innerText == "🚩") {
+        else if (tile.innerText === "🚩") {
             tile.innerText = "";
         }
+        return;
+    }
+
+    if (this.innerText === "🚩") {
         return;
     }
 
@@ -157,8 +207,13 @@ function checkMines(r, c) {
         checkMines(r+1, c+1);  // Bottom right
     }
 
+    if (board[r][c].innerText === "🚩") {
+        return;
+    }
+
     if(tilesClicked == rows * cols - minesCount) {
         document.getElementById("mines-count").innerText = "Cleared";
+        alert("Congratulations!");
         gameOver = true;
     }
 }

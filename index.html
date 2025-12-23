@@ -11,8 +11,16 @@
     <body>
         <h1>Mines: <span id="mines-count">0</span></h1>
 
-        <div id="board">
+        <label for="difficulty">Difficulty:</label>
+        <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+        </select>
 
+
+        <div id="game-container">
+            <div id="board"></div>
         </div>
 
     <br>
