@@ -27,7 +27,7 @@ body {
     align-items: center;
 }
 
-.tiles-clicked {
+.tile-clicked {
     background-color: darkgray;
 }
 
@@ -39,7 +39,7 @@ body {
     color: green;
 }
 
-.x2 {
+.x3 {
     color: red;
 }
 
