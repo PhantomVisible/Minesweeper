@@ -96,7 +96,7 @@ function setFlag(){
     }
     else {
         flagEnabled = true;
-        document.getElementById("flag-button").style.backgroundColor = "darkgray";
+        document.getElementById("flag-button").style.backgroundColor = "gray";
     }
 }
 
