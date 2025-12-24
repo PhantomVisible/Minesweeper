@@ -9,7 +9,7 @@ var flagEnabled = false;
 var gameOver = false;
 
 window.onload = function() {
-    loadDifficulty("medium");
+    loadDifficulty("easy");
 
     document.getElementById("difficulty").addEventListener("change", function () {
         loadDifficulty(this.value);

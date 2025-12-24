@@ -11,21 +11,25 @@
 <div class="game-container">
 
     <header class="game-header">
+        <div class="header-left">
         <h1>Mines: <span id="mines-count">0</span></h1>
+        </div>
 
-        <div class="controls">
-            <label for="difficulty">Difficulty:</label>
+        <div class="header-right">
             <select id="difficulty">
                 <option value="easy">Easy</option>
                 <option value="medium" selected>Medium</option>
                 <option value="hard">Hard</option>
             </select>
-
-            <button id="flag-button">🚩 Flag</button>
         </div>
     </header>
 
     <div id="board" class="board"></div>
+
+    <div class="footer">
+        <button id="flag-button">🚩 Flag</button>
+    </div>
+
     <audio id="boom-sound" src="boom.mp3"></audio>
 
 </div>
