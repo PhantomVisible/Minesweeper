@@ -48,6 +48,24 @@ body {
     align-items: center;
 }
 
+#difficulty {
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 2px solid #333;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    appearance: none; /* removes default arrow in some browsers */
+}
+
+/* Optional: add a custom arrow */
+#difficulty::after {
+    content: "▼";
+    position: absolute;
+    right: 10px;
+    pointer-events: none;
+}
+
 #flag-button {
     padding: 8px 15px;
     border: none;
@@ -86,6 +104,7 @@ body {
     height: var(--tile-size);
     box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
     background: #e0e0e0;
+    border: 1px solid whitesmoke;
     border-radius: 6px;
     display: flex;
     justify-content: center;

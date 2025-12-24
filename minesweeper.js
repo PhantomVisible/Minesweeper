@@ -55,6 +55,14 @@ function loadDifficulty(level) {
     cols = difficultySettings[level].cols;
     minesCount = difficultySettings[level].minesCount;
 
+    // Adjust tile size based on difficulty
+    let tileSize;
+    if(level === "easy") tileSize = 50;       // big tiles
+    else if(level === "medium") tileSize = 40; // medium tiles
+    else tileSize = 30;                        // smaller for hard
+
+    document.documentElement.style.setProperty('--tile-size', tileSize + 'px');
+
     resetGame();
 }
 
@@ -258,7 +266,7 @@ function checkMines(r, c) {
         return;
     }
 
-    if(tilesClicked == rows * cols - minesCount) {
+    if(tilesClicked === rows * cols - minesCount) {
         document.getElementById("mines-count").innerText = "Cleared";
         alert("Congratulations!");
         gameOver = true;
