@@ -1,80 +1,190 @@
+/* Reset & base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #89f7fe, #66a6ff);
 }
 
 :root {
     --tile-size: 32px;
+    --tile-color: #d3d3d3;
+    --tile-clicked: #e0e0e0;
+    --board-gap: 4px;
 }
 
-* {
-    box-sizing: border-box;
-}
-
-#game-container {
+/* Container */
+.game-container {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Header & controls */
+.game-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#flag-button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #ccc;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s ease;
+}
+
+#flag-button:hover {
+    background-color: gray;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Board grid */
+.board {
+    display: grid;
+    gap: 5px;
+    --tile-size: 40px; /* JS will update for larger boards */
 }
 
 #board {
     display: grid;
-    background-color: lightgray;
-    border: 10px solid black;
+    grid-template-columns: repeat(auto-fit, var(--tile-size));
+    gap: 4px; /* space between tiles */
+    background-color: #bdbdbd;
+    padding: 5px;
+    border-radius: 8px;
 }
 
+/* Tiles */
 #board div {
     width: var(--tile-size);
     height: var(--tile-size);
-    border: 1px solid whitesmoke;
-
-    /* text */
-    font-size: 18px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    background: #e0e0e0;
+    border-radius: 6px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+#board div.tile-clicked {
+    background: #ffffff;
+    box-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+}
+
+#board div:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+#board div.mine {
+    animation: explode 0.8s ease forwards;
+}
+
+@keyframes explode {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+@keyframes shake {
+    0% { transform: translate(0); }
+    25% { transform: translate(-5px, 0); }
+    50% { transform: translate(5px, 0); }
+    75% { transform: translate(-5px, 0); }
+    100% { transform: translate(0); }
+}
+
+#board.shake {
+    animation: shake 0.3s;
 }
 
 .tile-clicked {
-    background-color: darkgray;
+    background-color: #e0e0e0;
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2);
 }
 
-.x1 {
-    color: blue;
+#game-over-overlay {
+    display: none; /* hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
 }
 
-.x2 {
-    color: green;
+.game-over-message {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 24px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
-.x3 {
+#restart-button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f05a5a;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#restart-button:hover {
+    background-color: #c94b4b;
+}
+
+/* Number colors */
+#board div.x1 { color: blue; }
+#board div.x2 { color: green; }
+#board div.x3 { color: red; }
+#board div.x4 { color: navy; }
+#board div.x5 { color: brown; }
+#board div.x6 { color: turquoise; }
+#board div.x7 { color: black; }
+#board div.x8 { color: gray; }
+
+/* Mines */
+#board div.mine {
     color: red;
 }
 
-.x4 {
-    color: purple;
-}
-
-.x5 {
-    color: saddlebrown;
-}
-
-.x6 {
-    color: teal;
-}
-
-.x7 {
-    color: gray;
-}
-
-.x8 {
-    color: black;
-}
-
-#flag-button {
-    width: 100px;
-    height: 50px;
-    font-size: 30px;
-    background-color: lightgray;
-}

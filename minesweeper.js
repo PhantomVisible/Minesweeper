@@ -14,6 +14,34 @@ window.onload = function() {
     document.getElementById("difficulty").addEventListener("change", function () {
         loadDifficulty(this.value);
     });
+
+    // Add restart button listener here
+    document.getElementById("restart-button").addEventListener("click", function() {
+        document.getElementById("game-over-overlay").style.display = "none";
+        resetGame();
+    });
+
+    const overlay = document.getElementById("game-over-overlay");
+    const overlayText = document.getElementById("overlay-text");
+    const restartBtn = document.getElementById("restart-button");
+
+    overlayText.innerText = "Good Luck!";
+    overlay.style.display = "flex";
+
+    setTimeout(() => {
+        overlay.style.display = "none";
+    }, 2000);
+
+    restartBtn.addEventListener("click", () => {
+        overlay.style.display = "none";
+        resetGame();
+    });
+
+    document.getElementById("board").classList.add("shake");
+    setTimeout(() => {
+        document.getElementById("board").classList.remove("shake");
+    }, 300);
+
 }
 
 const difficultySettings = {
@@ -138,7 +166,22 @@ function clickTile() {
     if(minesLocation.includes(tile.id)) {
         gameOver = true;
         revealMines();
-        alert("GAME OVER");
+        //alert("GAME OVER");
+
+        setTimeout(() => {
+            const overlay = document.getElementById("game-over-overlay");
+            const overlayText = document.getElementById("overlay-text");
+            const boomSound = document.getElementById("boom-sound");
+
+            overlayText.innerText = "BOOM! Game Over";
+            overlay.style.display = "flex";
+
+            boomSound.currentTime = 0;
+            boomSound.play();
+        }, 50);
+ // 50ms delay
+
+        showGameOver();
         return;
     }
 
@@ -146,6 +189,10 @@ function clickTile() {
     let r = parseInt(coords[0]);
     let c = parseInt(coords[1]);
     checkMines(r, c);
+}
+
+function showGameOver() {
+    document.getElementById("game-over-overlay").style.display = "flex";
 }
 
 function revealMines() {

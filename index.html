@@ -1,29 +1,41 @@
-<!Doctype html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Minesweeper</title>
-        <link rel="stylesheet" href="minesweeper.css">
-        <script src="minesweeper.js"></script>
-    </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="minesweeper.css">
+    <script src="minesweeper.js" defer></script>
+</head>
+<body>
+<div class="game-container">
 
-    <body>
+    <header class="game-header">
         <h1>Mines: <span id="mines-count">0</span></h1>
 
-        <label for="difficulty">Difficulty:</label>
-        <select id="difficulty">
-            <option value="easy">Easy</option>
-            <option value="medium" selected>Medium</option>
-            <option value="hard">Hard</option>
-        </select>
+        <div class="controls">
+            <label for="difficulty">Difficulty:</label>
+            <select id="difficulty">
+                <option value="easy">Easy</option>
+                <option value="medium" selected>Medium</option>
+                <option value="hard">Hard</option>
+            </select>
 
-
-        <div id="game-container">
-            <div id="board"></div>
+            <button id="flag-button">🚩 Flag</button>
         </div>
+    </header>
 
-    <br>
-        <button id="flag-button">🚩</button>
-    </body>
+    <div id="board" class="board"></div>
+    <audio id="boom-sound" src="boom.mp3"></audio>
+
+</div>
+
+<div id="game-over-overlay">
+    <div class="game-over-message">
+        <h2 id="overlay-text"></h2>
+        <button id="restart-button">Start</button>
+    </div>
+</div>
+
+</body>
 </html>
