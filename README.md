@@ -29,7 +29,7 @@ A web-based Minesweeper game built with HTML, CSS, and JavaScript. This project 
 1. Clone the repository or download the files:
 
 ```bash
-git clone <your-repo-url>
+git clone <https://github.com/PhantomVisible/Minesweeper>
 ```
 
 2. Open index.html in a web browser (Chrome/Edge/Firefox recommended).
